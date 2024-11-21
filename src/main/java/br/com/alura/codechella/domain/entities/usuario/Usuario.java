@@ -1,30 +1,33 @@
-package br.com.alura.codechella.model;
+package br.com.alura.codechella.domain.entities.usuario;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import br.com.alura.codechella.domain.Endereco;
 
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "usuarios")
 public class Usuario {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String cpf;
     private String nome;
     private LocalDate nascimento;
     private String email;
+    private Endereco endereco;
 
-    public Long getId() {
-        return id;
+    public Usuario(String cpf, String nome, LocalDate nascimento, String email) {
+        if (cpf == null || !cpf.matches("\\d{3}\\.\\d{3}\\.\\d{3}\\-\\d{2}")){
+            throw new IllegalArgumentException("CPF no padrão incorreto.");
+        }
+
+        this.cpf = cpf;
+        this.nome = nome;
+        this.nascimento = nascimento;
+        this.email = email;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
     }
 
     public String getCpf() {
